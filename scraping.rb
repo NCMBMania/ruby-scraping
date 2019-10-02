@@ -2,6 +2,22 @@ require 'httparty'
 require 'cgi'
 require 'uri'
 
+# ExtractContent for Ruby 1.9
+# modified by mono
+
+# Author:: Nakatani Shuyo
+# Copyright:: (c)2007 Cybozu Labs Inc. All rights reserved.
+# License:: BSD
+
+# Extract Content Module for html
+# ExtractContent : 本文抽出モジュール
+#
+# 与えられた html テキストから本文と思わしきテキストを抽出します。
+# - html をブロックに分離、スコアの低いブロックを除外
+# - 評価の高い連続ブロックをクラスタ化し、クラスタ間でさらに比較を行う
+# - スコアは配置、テキスト長、アフィリエイトリンク、フッタ等に特有のキーワードが含まれているかによって決定
+# - Google AdSense Section Target ブロックには本文が記述されているとし、特に抽出
+
 module ExtractContent
   # Default option parameters.
   @default = {
